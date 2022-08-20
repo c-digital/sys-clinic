@@ -15,6 +15,7 @@ class ProductService extends Model
         'category_id',
         'unit_id',
         'type',
+        'sessions',
         'created_by',
     ];
 

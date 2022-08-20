@@ -75,6 +75,27 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="btn-box">
+                    <label class="d-block form-control-label">{{__('Have sessions?')}}</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="customRadio8" name="sessions" value="yes">
+                                <label class="custom-control-label form-control-label" for="customRadio8">{{__('Yes')}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="customRadio7" name="sessions" value="no" checked="checked">
+                                <label class="custom-control-label form-control-label" for="customRadio7">{{__('No')}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @if(!$customFields->isEmpty())
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="tab-pane fade show" id="tab-2" role="tabpanel">

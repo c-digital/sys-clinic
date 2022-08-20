@@ -88,6 +88,7 @@ class ProductServiceController extends Controller
             $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
             $productService->unit_id        = $request->unit_id;
             $productService->type           = $request->type;
+            $productService->sessions       = $request->sessions;
             $productService->category_id    = $request->category_id;
             $productService->created_by     = \Auth::user()->creatorId();
             $productService->save();
@@ -169,6 +170,7 @@ class ProductServiceController extends Controller
                 $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
                 $productService->unit_id        = $request->unit_id;
                 $productService->type           = $request->type;
+                $productService->sessions       = $request->sessions;
                 $productService->category_id    = $request->category_id;
                 $productService->created_by     = \Auth::user()->creatorId();
                 $productService->save();

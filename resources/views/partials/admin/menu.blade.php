@@ -139,6 +139,11 @@
                         <i class="fas fa-list"></i>{{__('Sessions')}}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('consultations.index') }}" class="nav-link {{ (Request::segment(1) == 'consultations')?'active':''}}">
+                        <i class="fas fa-hospital"></i>{{__('Consultations')}}
+                    </a>
+                </li>
                 @if(Gate::check('manage product & service'))
                     <li class="nav-item">
                         <a href="{{ route('productservice.index') }}" class="nav-link {{ (Request::segment(1) == 'productservice')?'active':''}}">

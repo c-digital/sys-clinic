@@ -31,6 +31,7 @@ Route::resource('contracts', 'ContractController');
 Route::resource('schedule', 'ScheduleController');
 Route::resource('sessions', 'SessionController');
 Route::resource('schedule-items', 'ScheduleItemController');
+Route::resource('consultations', 'ConsultationController');
 
 Route::post('/getDateEnd', 'ScheduleController@getDateEnd');
 

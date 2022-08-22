@@ -57,7 +57,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Realizar sesión</h5>
+                                                    <h5 class="modal-title">{{ __('Made session') }}</h5>
 
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -69,12 +69,12 @@
                                                     @csrf
 
                                                     <div class="modal-body p-3">
-                                                        <p>¿Está seguro que desea realizar la sesión?</p>
+                                                        <p>{{ __('Are you sure?') }}</p>
                                                     </div>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                                        <button type="submit" class="btn btn-primary">{{ __('Confirm') }}</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -93,10 +93,10 @@
                                                 </div>
 
                                                 <div class="modal-body p-4">
-                                                    <p>Cliente: {{ $session->customer->name }}</p>
-                                                    <p>Número de factura: {{ auth()->user()->invoiceNumberFormat($session->invoice_id) }}</p>
-                                                    <p>Servicio: {{ $session->service->name }}</p>
-                                                    <p>Cantidad: {{ $session->quantity }}</p>
+                                                    <p>{{ __('Customer') }}: {{ $session->customer->name }}</p>
+                                                    <p>{{ __('Invoice number') }}: {{ auth()->user()->invoiceNumberFormat($session->invoice_id) }}</p>
+                                                    <p>{{ __('Service') }}: {{ $session->service->name }}</p>
+                                                    <p>{{ __('Quantity') }}: {{ $session->quantity }}</p>
 
                                                     <hr>
 
@@ -104,8 +104,8 @@
 
                                                     <div class="row">
                                                         <div class="col">#</div>
-                                                        <div class="col">Fecha</div>
-                                                        <div class="col">Usuario</div>
+                                                        <div class="col">{{ __('Date') }}</div>
+                                                        <div class="col">{{ __('User') }}</div>
                                                     </div>
 
                                                     @foreach($session->made as $made)
@@ -118,7 +118,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
                                                 </div>
                                             </div>
                                         </div>

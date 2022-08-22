@@ -165,10 +165,10 @@ class InvoiceController extends Controller
 
                 Session::create([
                     'customer_id' => $request->customer_id,
-                    'service_id' => $products[$i]['item'];
-                    'invoice_id' => $invoice->id,
-                    'quantity' => $products[$i]['quantity']
-                    'made' => []
+                    'service_id'  => $products[$i]['item'],
+                    'invoice_id'  => $invoice->id,
+                    'quantity'    => $products[$i]['quantity'],
+                    'made'        => []
                 ]);
             }
 

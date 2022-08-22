@@ -8,6 +8,14 @@
     {{__('Sessions')}}
 @endsection
 
+@push('css-page')
+    <style>
+        .modal-dialog {
+            background-color: white;
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -32,16 +40,89 @@
                                         <td>{{ $session->customer->name }}</td>
                                         <td>{{ $session->service->name }}</td>
                                         <td>{{ $session->status }}</td>
-                                        <td nowrap>
-                                            <a href="{{ route('sessions.update', $sessions->id) }}" class="edit-icon bg-success">
-                                                <i class="fas fa-check"></i> Realizar sesión
-                                            </a>
+                                        <td>
+                                            @if (count($session->made) != $session->quantity)
+                                                <a data-toggle="modal" data-target="#made_{{ $session->id }}" href="#" class="edit-icon bg-success">
+                                                    <i class="fas fa-check"></i>
+                                                </a>
+                                            @endif
 
-                                            <a href="" class="edit-icon">
-                                                <i class="fas fa-eye"></i> Info
+                                            <a data-toggle="modal" data-target="#info_{{ $session->id }}" href="#" class="edit-icon">
+                                                <i class="fas fa-eye"></i>
                                             </a>
                                         </td>
                                     </tr>
+
+                                    <div class="modal" id="made_{{ $session->id }}" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Realizar sesión</h5>
+
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                <form action="/sessions/{{ $session->id }}" method="POST">
+                                                    @method('PUT')
+                                                    @csrf
+
+                                                    <div class="modal-body p-3">
+                                                        <p>¿Está seguro que desea realizar la sesión?</p>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal" id="info_{{ $session->id }}" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Info</h5>
+
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body p-4">
+                                                    <p>Cliente: {{ $session->customer->name }}</p>
+                                                    <p>Número de factura: {{ auth()->user()->invoiceNumberFormat($session->invoice_id) }}</p>
+                                                    <p>Servicio: {{ $session->service->name }}</p>
+                                                    <p>Cantidad: {{ $session->quantity }}</p>
+
+                                                    <hr>
+
+                                                    <p><b>Sesiones realizadas</b></p>
+
+                                                    <div class="row">
+                                                        <div class="col">#</div>
+                                                        <div class="col">Fecha</div>
+                                                        <div class="col">Usuario</div>
+                                                    </div>
+
+                                                    @foreach($session->made as $made)
+                                                        <div class="row">
+                                                            <div class="col">{{ $loop->iteration }}</div>
+                                                            <div class="col">{{ $made['datetime'] }}</div>
+                                                            <div class="col">{{ $made['user'] }}</div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

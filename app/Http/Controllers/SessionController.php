@@ -35,7 +35,17 @@ class SessionController extends Controller
 
     public function update(Request $request, Session $session)
     {
-        
+        $i = count($session->made);
+
+        $made = $session->made;
+
+        $made[$i]['datetime'] = date('Y-m-d h:i:s');
+        $made[$i]['user'] = auth()->user()->name;
+
+        $session->made = $made;
+        $session->save();
+
+        return redirect('/sessions');
     }
 
     public function destroy($id)

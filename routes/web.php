@@ -29,6 +29,7 @@ Route::get('projects/{project_id}/files/{file_id}/download', 'FileController@dow
 Route::resource('contracts', 'ContractController');
 
 Route::resource('schedule', 'ScheduleController');
+Route::resource('sessions', 'SessionController');
 Route::resource('schedule-items', 'ScheduleItemController');
 
 Route::post('/getDateEnd', 'ScheduleController@getDateEnd');

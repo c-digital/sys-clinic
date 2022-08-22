@@ -119,27 +119,26 @@
                         </li>
                     @endif
                 @endif
-                @if(Gate::check('manage product & service'))
-                    <li class="nav-item">
-                        <a href="{{ route('projects.index') }}" class="nav-link {{ (Request::segment(1) == 'projects')?'active':''}}">
-                            <i class="fas fa-list"></i>{{__('Projects')}}
-                        </a>
-                    </li>
-                @endif
-                @if(Gate::check('manage product & service'))
-                    <li class="nav-item">
-                        <a href="{{ route('contracts.index') }}" class="nav-link {{ (Request::segment(1) == 'contracts')?'active':''}}">
-                            <i class="fas fa-file"></i>{{__('Contracts')}}
-                        </a>
-                    </li>
-                @endif
-                @if(Gate::check('manage product & service'))
-                    <li class="nav-item">
-                        <a href="{{ route('schedule.index') }}" class="nav-link {{ (Request::segment(1) == 'schedule')?'active':''}}">
-                            <i class="fas fa-calendar"></i>{{__('Schedule')}}
-                        </a>
-                    </li>
-                @endif
+                <li class="nav-item">
+                    <a href="{{ route('projects.index') }}" class="nav-link {{ (Request::segment(1) == 'projects')?'active':''}}">
+                        <i class="fas fa-list"></i>{{__('Projects')}}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('contracts.index') }}" class="nav-link {{ (Request::segment(1) == 'contracts')?'active':''}}">
+                        <i class="fas fa-file"></i>{{__('Contracts')}}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('schedule.index') }}" class="nav-link {{ (Request::segment(1) == 'schedule')?'active':''}}">
+                        <i class="fas fa-calendar"></i>{{__('Schedule')}}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('sessions.index') }}" class="nav-link {{ (Request::segment(1) == 'sessions')?'active':''}}">
+                        <i class="fas fa-list"></i>{{__('Sessions')}}
+                    </a>
+                </li>
                 @if(Gate::check('manage product & service'))
                     <li class="nav-item">
                         <a href="{{ route('productservice.index') }}" class="nav-link {{ (Request::segment(1) == 'productservice')?'active':''}}">

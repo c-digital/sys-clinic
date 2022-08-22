@@ -15,6 +15,7 @@ use App\Mail\InvoiceSend;
 use App\Mail\PaymentReminder;
 use App\Milestone;
 use App\Products;
+use App\Session;
 use App\ProductService;
 use App\ProductServiceCategory;
 use App\Task;
@@ -161,6 +162,14 @@ class InvoiceController extends Controller
                 $invoiceProduct->price       = $products[$i]['price'];
                 $invoiceProduct->description = $products[$i]['description'];
                 $invoiceProduct->save();
+
+                Session::create([
+                    'customer_id' => $request->customer_id,
+                    'service_id' => $products[$i]['item'];
+                    'invoice_id' => $invoice->id,
+                    'quantity' => $products[$i]['quantity']
+                    'made' => []
+                ]);
             }
 
             return redirect()->route('invoice.index', $invoice->id)->with('success', __('Invoice successfully created.'));

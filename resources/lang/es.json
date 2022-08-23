@@ -1,5 +1,7 @@
 {
   "Tasks": "Tareas",
+  "Datetime": "Fecha",
+  "View consultation": "Ver consulta",
   " made of ": " realizadas de ",
   "Are you sure?": "¿Está seguro que desea realizar la sesión?",
   " contrated.": " contratadas.",
@@ -12,6 +14,7 @@
   "Total events registered": "Total de eventos registrados",
   "Professional": "Profesional",
   "Tuesday": "Martes",
+  "Edit consultation": "Editar consulta",
   "Create consultation": "Crear consulta",
   "Anamnesis": "Anamnesis",
   "Physical activity": "Actividad física",

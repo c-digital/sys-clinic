@@ -4,23 +4,81 @@
     {{__('Create consultation')}}
 @endsection
 
+@push('css-page')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" integrity="sha512-In/+MILhf6UMDJU4ZhDL0R0fEpsp4D3Le23m6+ujDWXwl3whwpucJG1PEmI3B07nyJx+875ccs+yX2CqQJUxUw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .profile {
+            cursor: pointer;
+            width: 100%;
+            border-radius: 100%;
+        }
+
+        .upload-files {
+            display: block;
+        }
+    </style>
+@endpush
+
+
 @push('script-page')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
+        $('.dropify').dropify();
+
         $(document).ready(function () {
             $('.select2').select2();
+
+            $('.profile').click(function () {
+                $('.input-profile').click();
+            });
+
+            $('.input-profile').change(function () {
+                input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        $('.profile').attr('src', event.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+
+            $('.upload-files').click(function () {
+                $('.multiple-files').click();
+            });
+
+            $('.multiple-files').change(function () {
+                input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        console.log(event);
+                    }
+                }
+
+                html = '';
+
+                for (var i = input.files.length - 1; i >= 0; i--) {
+                    html = html + '<li>'+input.files[i].name+'</li>';
+                }
+
+                $('.files-selected').html(html);
+            });
         });
     </script>
 @endpush
-
 @section('content')
-    <form action="/consultations" method="POST">
+    <form action="/consultations" enctype="multipart/form-data" method="POST">
         @csrf
 
         <div class="card mt-4">
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <img width="100%" src="https://sysclinic.net/storage/uploads/avatar/avatar.png" alt="">
+                        <img class="profile" src="https://sysclinic.net/storage/uploads/avatar/avatar.png" alt="">
+                        <input type="file" name="photo" class="input-profile">
                     </div>
 
                     <div class="col-8">
@@ -161,8 +219,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="anamnesis[cie10]">CIE 10</label>
-                            <select name="cei10" class="form-control">
+                            <label for="anamnesis[cei10]">CIE 10</label>
+                            <select name="anamnesis[cei10]" class="form-control">
                                 <option value=""></option>
                                 @foreach($diseases as $disease)
                                     <option value="{{ $disease->code }}">{{ $disease->description }}</option>
@@ -228,8 +286,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="photos">Photos</label>
-                            <input class="form-control" type="file" name="files[]">
+                            <label for="photos">{{ __('Photos') }}</label><br>
+                            <button type="button" class="btn btn-secondary upload-files">Seleccionar archivos</button>
+                            <input multiple type="file" class="multiple-files" name="photos[]">
+                            <p class="files-selected mt-3"></p>
                         </div>
                     </div>
                 </div>
@@ -243,7 +303,7 @@
         </div>
 
         <input type="submit" class="btn btn-primary" value="{{ __('Create') }}">
-        <a href="/consultations " class="btn btn-secondary">{{ __('Back') }}</a>
+        <a href="/consultations" class="btn btn-secondary">{{ __('Back') }}</a>
     </form>
 @endsection
 

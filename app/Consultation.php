@@ -10,5 +10,15 @@ class Consultation extends Model
 
     public $timestamps = false;
 
-    protected $casts = ['anamnesis' => 'array'];
+    protected $casts = ['anamnesis' => 'array', 'photos' => 'array'];
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Customer');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

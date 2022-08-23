@@ -32,22 +32,91 @@ class ConsultationController extends Controller
 
     public function store(Request $request)
     {
-        foreach ($request->file('files') as $file) {
-            $filename = $file->getClientOriginalName();
-            $extension = $file->extension();
+        $photos = [];
+        $photo = '';
 
-            $file->move(public_path() . '/uploads', $filename);
+        if ($request->photos) {
+            foreach ($request->file('photos') as $file) {
+                $filename = $file->getClientOriginalName();
+                $extension = $file->extension();
 
-            $photos[] = $filename;
+                $file->move(public_path() . '/uploads', $filename);
+
+                $photos[] = $filename;
+            }
         }
 
-        $request->file('photo')->move(public_path() . '/uploads', $request->file('photo')->getClientOriginalName());
+        if ($request->photo) {
+            $request->file('photo')->move(public_path() . '/uploads', $request->file('photo')->getClientOriginalName());
+            $photo = $request->file('photo')->getClientOriginalName();
+        }
 
-        Consultation::create([
+        $consultations = Consultation::create([
+            'customer_id' => $request->customer_id,
+            'user_id'     => auth()->user()->id,
+            'photo'       => $photo,
+            'photos'      => $photos,
+            'age'         => $request->age,
+            'amount'      => $request->amount,
+            'anamnesis'   => $request->anamnesis,
+            'datetime'    => date('Y-m-d h:i:s'),
+            'status'      => 'Pendiente',
+        ]);
+
+        CustomField::saveData($consultations, $request->customField);
+
+        return redirect('/consultations');
+    }
+
+    public function show(Consultation $consultation)
+    {
+        $customers = Customer::orderBy('name')->get();
+
+        $diseases = Disease::orderBy('code')->get();
+
+        $professionals = User::orderBy('name')->get();
+
+        $customFields = CustomField::where('module', '=', 'consultations')->get();
+
+        return view('consultations.show', compact('customFields', 'customers', 'diseases', 'professionals', 'consultation'));
+    }
+
+    public function edit(Consultation $consultation)
+    {
+        $customers = Customer::orderBy('name')->get();
+
+        $diseases = Disease::orderBy('code')->get();
+
+        $professionals = User::orderBy('name')->get();
+
+        $customFields = CustomField::where('module', '=', 'consultations')->get();
+
+        return view('consultations.edit', compact('customFields', 'customers', 'diseases', 'professionals', 'consultation'));
+    }
+
+    public function update(Request $request, Consultation $consultation)
+    {
+        if ($request->file('photos')) {
+            foreach ($request->file('photos') as $file) {
+                $filename = $file->getClientOriginalName();
+                $extension = $file->extension();
+
+                $file->move(public_path() . '/uploads', $filename);
+
+                $photos[] = $filename;
+            }
+
+            $consultation->update(['photos' => $photos]);
+        }
+
+        if ($request->file('photo')) {
+            $request->file('photo')->move(public_path() . '/uploads', $request->file('photo')->getClientOriginalName());
+            $consultation->update(['photo' => $request->file('photo')->getClientOriginalName]);
+        }
+
+        $consultations = Consultation::create([
             'customer_id' => $request->customer_id,
             'user_id'     => $request->user_id,
-            'photo'       => $request->file('photo')->getClientOriginalName,
-            'photos'      => $photos,
             'age'         => $request->age,
             'amount'      => $request->amount,
             'anamnesis'   => $request->anamnesis,
@@ -60,31 +129,9 @@ class ConsultationController extends Controller
         return redirect('/consultations');
     }
 
-    public function show(Session $session)
-    {
-
-    }
-
-    public function edit($id)
-    {
-        $customers = Customer::orderBy('name')->get();
-
-        $diseases = Disease::orderBy('code')->get();
-
-        $professionals = User::orderBy('name')->get();
-
-        $customFields = CustomField::where('module', '=', 'consultations')->get();
-
-        return view('consultations.edit', compact('customFields', 'customers', 'diseases', 'professionals'));
-    }
-
-    public function update(Request $request, Session $session)
-    {
-
-    }
-
     public function destroy($id)
     {
-
+        Consultation::find($id)->delete();
+        return redirect('/consultations');
     }
 }

@@ -78,6 +78,8 @@ class ConsultationController extends Controller
 
         $customFields = CustomField::where('module', '=', 'consultations')->get();
 
+        $consultation->customField = CustomField::getData($consultation, 'consultations');
+
         return view('consultations.show', compact('customFields', 'customers', 'diseases', 'professionals', 'consultation'));
     }
 
@@ -90,6 +92,8 @@ class ConsultationController extends Controller
         $professionals = User::orderBy('name')->get();
 
         $customFields = CustomField::where('module', '=', 'consultations')->get();
+
+        $consultation->customField = CustomField::getData($consultation, 'consultations');
 
         return view('consultations.edit', compact('customFields', 'customers', 'diseases', 'professionals', 'consultation'));
     }

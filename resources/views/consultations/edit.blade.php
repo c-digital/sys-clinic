@@ -21,7 +21,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <img width="100%" src="{{ $consultation->photo ?? 'https://sysclinic.net/storage/uploads/avatar/avatar.png' }}" alt="">
+                        <img width="100%" src="{{ $consultation->photo ? 'https://sysclinic.net/public/uploads/' . $consultation->photo : 'https://sysclinic.net/storage/uploads/avatar/avatar.png' }}" alt="">
                     </div>
 
                     <div class="col-8">
@@ -237,7 +237,47 @@
 
                 <div class="row">
                    <div class="col-md-6">
-                        @include('customFields.formBuilder')
+                        @if($customFields)
+                            @foreach($customFields as $customField)
+                                @if($customField->type == 'text')
+                                    <div class="form-group">
+                                        {{ Form::label('customField-'.$customField->id, __($customField->name),['class'=>'form-control-label']) }}
+                                        <div class="input-group">
+                                            {{ Form::text('customField['.$customField->id.']', $consultation->customField[$customField->id], array('class' => 'form-control')) }}
+                                        </div>
+                                    </div>
+                                @elseif($customField->type == 'email')
+                                    <div class="form-group">
+                                        {{ Form::label('customField-'.$customField->id, __($customField->name),['class'=>'form-control-label']) }}
+                                        <div class="input-group">
+                                            {{ Form::email('customField['.$customField->id.']', $consultation->customField[$customField->id], array('class' => 'form-control')) }}
+                                        </div>
+                                    </div>
+                                @elseif($customField->type == 'number')
+                                    <div class="form-group">
+                                        {{ Form::label('customField-'.$customField->id, __($customField->name),['class'=>'form-control-label']) }}
+                                        <div class="input-group">
+                                            {{ Form::number('customField['.$customField->id.']', $consultation->customField[$customField->id], array('class' => 'form-control')) }}
+                                        </div>
+                                    </div>
+                                @elseif($customField->type == 'date')
+                                    <div class="form-group">
+                                        {{ Form::label('customField-'.$customField->id, __($customField->name),['class'=>'form-control-label']) }}
+                                        <div class="input-group">
+                                            {{ Form::date('customField['.$customField->id.']', $consultation->customField[$customField->id], array('class' => 'form-control')) }}
+                                        </div>
+                                    </div>
+                                @elseif($customField->type == 'textarea')
+                                    <div class="form-group">
+                                        {{ Form::label('customField-'.$customField->id, __($customField->name),['class'=>'form-control-label']) }}
+                                        <div class="input-group">
+                                            {{ Form::textarea('customField['.$customField->id.']', $consultation->customField[$customField->id], array('class' => 'form-control')) }}
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endif
+
                     </div>
                 </div>
             </div>

@@ -20,11 +20,8 @@ class ConsultationController extends Controller
     public function create()
     {
         $customers = Customer::orderBy('name')->get();
-
-        $diseases = Disease::orderBy('code')->get();
-
-        $professionals = User::orderBy('name')->get();
-
+        $diseases = Disease::orderBy('code')->get();        
+        $professionals = User::where('created_by', auth()->user()->id)->get();
         $customFields = CustomField::where('module', '=', 'consultations')->get();
 
         return view('consultations.create', compact('customFields', 'customers', 'diseases', 'professionals'));
@@ -74,7 +71,7 @@ class ConsultationController extends Controller
 
         $diseases = Disease::orderBy('code')->get();
 
-        $professionals = User::orderBy('name')->get();
+        $professionals = User::where('created_by', auth()->user()->id)->get();
 
         $customFields = CustomField::where('module', '=', 'consultations')->get();
 
@@ -89,7 +86,7 @@ class ConsultationController extends Controller
 
         $diseases = Disease::orderBy('code')->get();
 
-        $professionals = User::orderBy('name')->get();
+        $professionals = User::where('created_by', auth()->user()->id)->get();
 
         $customFields = CustomField::where('module', '=', 'consultations')->get();
 

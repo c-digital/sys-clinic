@@ -8,7 +8,40 @@
     <script>
         $(document).ready(function () {
             $('.select2').select2();
+
+            $('#weight').change(function () {
+                imc();
+            });
+
+            $('#height').change(function () {
+                imc();
+            });
         });
+
+        function imc() {
+            weight = $('#weight').val();
+            height = $('#height').val();
+
+            if (weight != '') {
+                weight = parseInt(weight);
+            }
+
+            if (height != '') {
+                height = parseInt(height);
+            }
+
+            if (weight != '' && height == '') {
+                $('#imc').val(weight);
+            }
+
+            if (height != '' && weight == '') {
+                $('#imc').val(height * height);
+            }
+
+            if (weight != '' && height != '') {
+                $('#imc').val(weight + (height * height));
+            }
+        }
     </script>
 @endpush
 
@@ -79,21 +112,21 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="anamnesis[weight]">{{ __('Weight') }}</label>
-                                    <input type="text" name="anamnesis[weight]" class="form-control" value="{{ $consultation->anamnesis['weight'] }}">
+                                    <input type="text" id="weight" name="anamnesis[weight]" class="form-control" value="{{ $consultation->anamnesis['weight'] }}">
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label for="anamnesis[height]">{{ __('Height') }}</label>
-                                    <input type="text" name="anamnesis[height]" class="form-control" value="{{ $consultation->anamnesis['height'] }}">
+                                    <input type="text" id="height" name="anamnesis[height]" class="form-control" value="{{ $consultation->anamnesis['height'] }}">
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label for="anamnesis[imc]">{{ __('IMC') }}</label>
-                                    <input type="text" name="anamnesis[imc]" class="form-control" value="{{ $consultation->anamnesis['imc'] }}">
+                                    <input type="text" id="imc" name="anamnesis[imc]" class="form-control" value="{{ $consultation->anamnesis['imc'] }}">
                                 </div>
                             </div>
 

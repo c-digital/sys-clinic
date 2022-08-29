@@ -66,9 +66,44 @@
 
                 $('.files-selected').html(html);
             });
+
+            $('#weight').change(function () {
+                imc();
+            });
+
+            $('#height').change(function () {
+                imc();
+            });
         });
+
+        function imc() {
+            weight = $('#weight').val();
+            height = $('#height').val();
+
+            if (weight != '') {
+                weight = parseInt(weight);
+            }
+
+            if (height != '') {
+                height = parseInt(height);
+            }
+
+            if (weight != '' && height == '') {
+                $('#imc').val(weight);
+            }
+
+            if (height != '' && weight == '') {
+                $('#imc').val(height * height);
+            }
+
+            if (weight != '' && height != '') {
+                $('#imc').val(weight + (height * height));
+            }
+        }
+
     </script>
 @endpush
+
 @section('content')
     <form action="/consultations" enctype="multipart/form-data" method="POST">
         @csrf
@@ -136,21 +171,21 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="anamnesis[weight]">{{ __('Weight') }}</label>
-                                    <input type="text" name="anamnesis[weight]" class="form-control">
+                                    <input id="weight" type="text" name="anamnesis[weight]" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label for="anamnesis[height]">{{ __('Height') }}</label>
-                                    <input type="text" name="anamnesis[height]" class="form-control">
+                                    <input type="text" id="height" name="anamnesis[height]" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label for="anamnesis[imc]">{{ __('IMC') }}</label>
-                                    <input type="text" name="anamnesis[imc]" class="form-control">
+                                    <input type="text" readonly id="imc" name="anamnesis[imc]" class="form-control">
                                 </div>
                             </div>
 

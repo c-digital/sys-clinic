@@ -41,7 +41,7 @@ class Utility extends Model
             "proposal_color" => "ffffff",
             "bill_prefix" => "#BILL",
             "bill_color" => "ffffff",
-            "customer_prefix" => "#CUST",
+            "customer_prefix" => "#PACI",
             "vender_prefix" => "#VEND",
             "footer_title" => "",
             "footer_notes" => "",
